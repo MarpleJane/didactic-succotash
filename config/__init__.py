@@ -1,4 +1,7 @@
 #coding: utf8
+import logging
+import datetime
+
 import psycopg2.extras
 import psycopg2.extensions
 from tornado.web import RequestHandler
@@ -29,4 +32,58 @@ class BaseController(RequestHandler):
 
     def put_conn(self, conn):
         self.__pool.putconn(conn)
+
+    def select_all(self, statement, params):
+        conn = self.get_conn()
+        cursor = self.get_cursor(conn)
+        total = 0
+        try:
+            cursor.execute(statement, params)
+            total = cursor.fetchall()
+        except Exception as e:
+            logging.warn(e)
+            conn.rollback()
+        finally:
+            self.put_conn(conn)
+        return total
+
+    def insert_data(self, statement, params):
+        conn = self.get_conn()
+        cursor = self.get_cursor(conn)
+        ret = 0
+        try:
+            cursor.execute(statement, params)
+            conn.commit()
+        except Exception as e:
+            ret = 1
+            logging.warn(e)
+            conn.rollback()
+        finally:
+            self.put_conn(conn)
+        return ret
+
+    def update_data(self, statement, params):
+        return self.insert_data(statement, params)
+        # conn = self.get_conn()
+        # cursor = self.get_cursor(conn)
+        # ret = 0
+        # try:
+        #     cursor.execute(statement, params)
+        #     conn.commit()
+        # except Exception as e:
+        #     logging.warn(e)
+        #     conn.rollback()
+        #     ret = 1
+        # finally:
+        #     self.put_conn(conn)
+        # return ret
+
+    def delete_data(self, statement, params):
+        return self.insert_data(statement, params)
+
+    def current_time(self):
+        now = datetime.datetime.now()
+        current_time = now.strftime("%Y-%m-%d %H:%M:%S")
+        return current_time
+
 

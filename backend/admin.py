@@ -22,5 +22,12 @@ class AdminAddController(BaseController):
         h1.update(pwd.encode(encoding='utf8'))
         return h1.hexdigest()
 
-    def get(self):
-        return
+    def post(self):
+        data = tornado.escape.json_decode(self.request.body)
+        user_name = data['user_name']
+        pwd = data['password']
+        real_name = data['real_name']
+        status = 1
+        pwd = self.encrypt(pwd)
+        
+        self.write(dict(ret=0))
