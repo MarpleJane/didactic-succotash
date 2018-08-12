@@ -2,3 +2,4 @@
 from .admin import *
 from .simulation import *
 from .chapter import *
+from .upload import *

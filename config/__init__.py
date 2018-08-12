@@ -5,8 +5,9 @@ import datetime
 import psycopg2.extras
 import psycopg2.extensions
 from tornado.web import RequestHandler
+from qiniu import Auth, put_data
 
-from .settings import POOL
+from .settings import POOL, QINIU
 
 
 DEC2FLOAT = psycopg2.extensions.new_type(
@@ -18,6 +19,7 @@ psycopg2.extensions.register_type(DEC2FLOAT)
 
 class BaseController(RequestHandler):
     __pool = POOL
+    qiniu = QINIU
 
     def set_default_headers(self):
         self.set_header("Access-Control-Allow-Origin", "*")
@@ -85,5 +87,22 @@ class BaseController(RequestHandler):
         now = datetime.datetime.now()
         current_time = now.strftime("%Y-%m-%d %H:%M:%S")
         return current_time
+
+    def today_date(self):
+        now = datetime.datetime.now()
+        today_date = now.strftime("%Y-%m-%d")
+        return today_date
+
+    def generate_token(self, key):
+        q = Auth(self.qiniu["ACCESS_KEY"], self.qiniu["SECURE_KEY"])
+        token = q.upload_token(self.qiniu["BUCKET"], key, 3600)
+        return token
+    
+    def upload_file(self, token, key, file_body):
+        ret, info = put_data(token, key, file_body)
+        logging.warn(ret)
+        logging.warn(info)
+        if info.status_code == 200:
+            return self.qiniu["PREFIX"] + key
 
 

@@ -123,13 +123,14 @@ class SimulationAddNewController(BaseController):
     ADD_NEW = 0
     EDIT = 1
 
+    def upload_picture(self, pic):
+        return
+
     def post(self):
         data = tornado.escape.json_decode(self.request.body)
         edit = data['edit']
         form = data['form']
         ret = 0
-        # now = datetime.datetime.now()
-        # update_time = now.strftime("%Y-%m-%d %H:%M:%S")
         form['update_time'] = self.current_time()
 
         if edit == self.ADD_NEW:

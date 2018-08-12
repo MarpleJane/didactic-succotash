@@ -44,3 +44,11 @@ POOL = SimpleConnectionPool(
     host=PG_DB["host"],
     port=PG_DB["port"],
 )
+
+QINIU = {
+    "ACCESS_KEY": "epbKZnxFUtJ9bTWufWtvXkAwtsseutpa8xRpJ3KI",
+    "SECURE_KEY": "TEWIuwOCs9KTeRqrOuQEDmUHDDd6RYBkoZ32m2Is",
+    # "BUCKET": "otaku-test-1",
+    "BUCKET": "otaku-resource",
+    "PREFIX": "http://source.moemoe.la/"
+}

@@ -13,6 +13,8 @@ urls = [
     ("/v1/add_new/chapter",ChapterAddNewController),
     ("/v1/del/chapter", ChapterDelController),
 
+    ("/upload/picture", UploadPictureController),
+    
     ("/v1/admin", AdminController),
     ("/v1/admin/add", AdminAddController),
 ]
