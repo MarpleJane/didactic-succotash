@@ -16,11 +16,11 @@ from psycopg2.pool import SimpleConnectionPool
 # }
 
 # PG_DB = {
-#     "db": "postgres",
+#     "db": "mmd",
 #     "user": "otaku",
-#     "pwd": "m0em0e@db",
-#     "host": "10.10.33.159",
-#     "port": "12345",
+#     "pwd": "otaku",
+#     "host": "127.0.0.1",
+#     "port": "5432",
 #     "minconn": 5,  # 最小连接数
 #     "maxconn": 200  # 最大连接数
 # }
