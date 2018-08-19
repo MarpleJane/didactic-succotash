@@ -17,4 +17,14 @@ urls = [
     
     ("/v1/admin", AdminController),
     ("/v1/admin/add", AdminAddController),
+
+    ("/v1/user_rank", UserRankController),
+    ("/v1/user_signup", UserSignupController),
+    ("/v1/user_info/([0-9]+)", UserInfo),
+    ("/v1/get_coins/([0-9]+)", GetCoinsController),
+
+    ("/v1/simulation_plots/([0-9])+", SimulationPlotsController),
+    ("/v1/chapter_plots/([0-9])+", ChapterPlotsController),
+    ("/v1/simulation_plot/[(0-9)]+", SimulationPlotController),
+    ("/v1/chapter_plot/[0-9]+", ChapterPlotController),
 ]
