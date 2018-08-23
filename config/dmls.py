@@ -2,7 +2,7 @@
 
 
 INSERT_CHAPTER = """
-    INSERT INTO chapter_plot(chapter_name, position, plot_json, type_id, description)
+    INSERT INTO chapter_plot(plot_name, position, plot_json, type_id, description)
         VALUES(%(plot_name)s, %(position)s, %(plot_json)s, %(type_id)s, %(description)s)
 """
 

@@ -15,25 +15,25 @@ from psycopg2.pool import SimpleConnectionPool
 #     "maxconn": 200  # 最大连接数
 # }
 
-# PG_DB = {
-#     "db": "mmd",
-#     "user": "otaku",
-#     "pwd": "otaku",
-#     "host": "127.0.0.1",
-#     "port": "5432",
-#     "minconn": 5,  # 最小连接数
-#     "maxconn": 200  # 最大连接数
-# }
-
 PG_DB = {
-    "db": "wechat_gal",
-    "user": "postgres",
-    "pwd": "root",
+    "db": "mmd",
+    "user": "otaku",
+    "pwd": "otaku",
     "host": "127.0.0.1",
     "port": "5432",
     "minconn": 5,  # 最小连接数
     "maxconn": 200  # 最大连接数
 }
+
+# PG_DB = {
+#     "db": "wechat_gal",
+#     "user": "postgres",
+#     "pwd": "root",
+#     "host": "127.0.0.1",
+#     "port": "5432",
+#     "minconn": 5,  # 最小连接数
+#     "maxconn": 200  # 最大连接数
+# }
 
 POOL = SimpleConnectionPool(
     PG_DB["minconn"], 

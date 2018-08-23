@@ -8,7 +8,7 @@ from tornado.httpserver import HTTPServer
 from config.urls import urls
 
 
-PORT = "8888"
+PORT = "8889"
 def main():
     application = tornado.web.Application(urls)
     server = HTTPServer(
