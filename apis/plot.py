@@ -41,6 +41,6 @@ class ChapterPlotController(BaseController):
     def get(self, plot_id):
         plot_id = int(plot_id)
         params = {"plot_id": plot_id}
-        chapter = self.select_all(CHAPTERS["CHAPTER_PLOT"], params))
+        chapter = self.select_all(CHAPTERS["CHAPTER_PLOT"], params)
         chapter = chapter[0]
         self.write(dict(chapter=chapter))
