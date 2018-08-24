@@ -9,7 +9,7 @@ from config.dmls_api import SIMULATIONS, CHAPTERS
 
 
 class SimulationPlotsController(BaseController):
-    """/v1/simulation_plots/([0-9])+"""
+    """/v1/simulation_plots/([0-9]+)"""
     def get(self, type_id):
         type_id = int(type_id)
         params = {"type_id": type_id}
@@ -18,7 +18,7 @@ class SimulationPlotsController(BaseController):
 
 
 class ChapterPlotsController(BaseController):
-    """/v1/chapter_plots/([0-9])+"""
+    """/v1/chapter_plots/([0-9]+)"""
     def get(self, type_id):
         type_id = int(type_id)
         params = {"type_id": type_id}
@@ -27,7 +27,7 @@ class ChapterPlotsController(BaseController):
 
 
 class SimulationPlotController(BaseController):
-    """/v1/simulation_plot/[(0-9)]+"""
+    """/v1/simulation_plot/([0-9]+)"""
     def get(self, plot_id):
         plot_id = int(plot_id)
         params = {"plot_id": plot_id}
@@ -37,10 +37,10 @@ class SimulationPlotController(BaseController):
 
 
 class ChapterPlotController(BaseController):
-    """/v1/chapter_plot/[0-9]+"""
+    """/v1/chapter_plot/([0-9]+)"""
     def get(self, plot_id):
         plot_id = int(plot_id)
         params = {"plot_id": plot_id}
-        chapter = self.select_all(CHAPTER["CHAPTER_PLOT"], params)
+        chapter = self.select_all(CHAPTERS["CHAPTER_PLOT"], params))
         chapter = chapter[0]
         self.write(dict(chapter=chapter))

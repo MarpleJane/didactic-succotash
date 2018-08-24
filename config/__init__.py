@@ -47,7 +47,11 @@ class BaseController(RequestHandler):
             conn.rollback()
         finally:
             self.put_conn(conn)
-        return total
+        
+        if total:
+            return total
+        else:
+            return [{}]
 
     def insert_data(self, statement, params):
         conn = self.get_conn()

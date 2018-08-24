@@ -51,7 +51,7 @@ CHAPTER_PLOTS = """
 
 CHAPTER_PLOT = """
     SELECT id, plot_name, position, plot_json FROM chapter_plot
-      WHERE id = %(plot_id)s AND delete = 0
+      WHERE delete = 0 AND id = %(plot_id)s
 """
 
 
@@ -69,5 +69,5 @@ SIMULATIONS = {
 
 CHAPTERS = {
     "CHAPTER_PLOTS": CHAPTER_PLOTS,
-    "CHAPTER_PLOT": CHAPTER_PLOTS,
+    "CHAPTER_PLOT": CHAPTER_PLOT,
 }
