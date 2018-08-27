@@ -31,7 +31,7 @@ class UserInfo(BaseController):
     """/v1/user_info/([0-9]+)"""
     def get(self, user_id):
         user_id = int(user_id)
-        params = {"user_id": user_id}
+        params = {"challenger_id": user_id}
         user_info = self.select_all(USERS["USER_INFO"], params)
         user_info = user_info[0]
         self.write(dict(user_info=user_info))

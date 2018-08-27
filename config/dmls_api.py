@@ -3,7 +3,7 @@
 
 # 用户模拟类型剧情的挑战评价（总分数，所有剧情分数的总和，每个剧情只同时存在一个分值，再次挑战覆盖上一次的分值）
 USER_INFO = """
-    SELECT b.challenger_id AS user_id, b.total_score AS total_score, a.name AS user_name, a.avatar AS avatar, a.get_coins AS get_coins
+    SELECT b.challenger_id AS user_id, b.total_score AS total_score, a.name AS user_name, a.avatar AS avatar, a.get_coins AS get_coins, a.w_id AS w_id
       FROM
         (SELECT challenger_id, SUM(highest_score) AS total_score FROM simulation_challenge
           GROUP BY challenger_id
