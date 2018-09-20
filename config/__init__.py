@@ -53,6 +53,20 @@ class BaseController(RequestHandler):
         else:
             return [{}]
 
+    def find_data(self, statement, params):
+        conn = self.get_conn()
+        cursor = self.get_cursor(conn)
+        result = {}
+        try:
+            cursor.execute(statement, params)
+            result = cursor.fetchone()
+        except Exception as e:
+            logging.warn(e)
+            conn.rollback()
+        finally:
+            self.put_conn(conn)
+        return result
+
     def insert_data(self, statement, params):
         conn = self.get_conn()
         cursor = self.get_cursor(conn)
@@ -91,6 +105,9 @@ class BaseController(RequestHandler):
         now = datetime.datetime.now()
         current_time = now.strftime("%Y-%m-%d %H:%M:%S")
         return current_time
+
+    def current_time_obj(self):
+        return datetime.datetime.now()
 
     def today_date(self):
         now = datetime.datetime.now()

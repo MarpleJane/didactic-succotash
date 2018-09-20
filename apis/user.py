@@ -23,8 +23,17 @@ class UserSignupController(BaseController):
         avatar = self.get_argument("avatar")
         w_id = self.get_argument("w_id")
         params = {"user_name": user_name, "avatar": avatar, "w_id": w_id}
-        ret = self.insert_data(USERS["USER_INSERT"], params)
-        self.write(dict(ret=ret))
+        user_data = self.find_data(USERS["FIND_USER"], params)
+        ret = 1  # has exception
+        if user_data:
+            ret = 2  # user exist, then FE should jump to "/v1/get_coins"
+            current_time = self.current_time_obj()
+            need_coins = (current_time - user_data["last_click_login"].rsplit(".")[0]).days >= 1
+            self.insert_data()  # TODO
+            self.write(dict(ret=ret, user_data=user_data, need_coins=need_coins))
+        else:
+            ret = self.insert_data(USERS["USER_INSERT"], params)
+            self.write(dict(ret=ret))
 
 
 class UserInfo(BaseController):

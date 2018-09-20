@@ -5,7 +5,7 @@ import datetime
 import tornado.escape
 
 from config import BaseController
-from config.dmls_api import SIMULATIONS, CHAPTERS
+from config.dmls_api import SIMULATIONS, CHAPTERS, USERS
 
 
 class SimulationPlotsController(BaseController):
@@ -44,3 +44,68 @@ class ChapterPlotController(BaseController):
         chapter = self.select_all(CHAPTERS["CHAPTER_PLOT"], params)
         chapter = chapter[0]
         self.write(dict(chapter=chapter))
+
+
+class ChapterInfoController(BaseController):
+    """/v1/chapter_info"""
+    def post(self):
+        data = tornado.escape.json_decode(self.request.body)
+        w_id = data["w_id"]
+        type_id = data["type_id"]
+        params_user = {"w_id": w_id}
+        user_data = self.find_data(USERS["FIND_USER"], params)
+        user_chapter = []
+        if user_data:
+            params = {"user_id": user_data["id"], "type_id": type_id}
+            user_chapter = self.select_all(CHAPTERS["CHAPTER_TO_USER"], params)
+            
+        self.write(dict(user_chapter=user_chapter))  # if user_chapter=[] 
+                                                     # then user not exist or error occurred
+
+
+class ChapterChallengeController(BaseController):  # TODO: need test
+    """/v1/add/chapter_challenge"""
+    def post(self):
+        w_id = self.get_argument("w_id")
+        plot_id = self.get_argument("plot_id")
+        score = self.get_argument("score")
+        params_user = {"w_id": w_id}
+        user_data = self.find_data(USERS["FIND_USER"], params)
+        ret = 0
+        if user_data:
+            params = {
+                "user_id": user_data["id"],
+                "plot_id": plot_id,
+                "score": score
+            }
+            ret = self.insert_data(CHAPTERS["CHAPTER_CHALLENGE_INSERT"], params)
+            if ret == 0:
+                ret = self.update_data(CHAPTERS["CHAPTER_ADD_CHALLENGER"], params)
+        else:
+            ret = 1
+            logging.warn("No user data: in <ChapterChallengeController>")
+        self.write(dict(ret=ret))
+
+
+class SimulationChallengeController(BaseController):  # TODO: need test
+    """/v1/add/simulation_challenge"""
+    def post(self):
+        w_id = self.get_argument("w_id")
+        plot_id = self.get_argument("plot_id")
+        score = self.get_argument("score")
+        params_user = {"w_id": w_id}
+        user_data = self.find_data(USERS["FIND_USER"], params)
+        ret = 0
+        if user_data:
+            params = {
+                "user_id": user_data["id"],
+                "plot_id": plot_id,
+                "score": score
+            }
+            ret = self.insert_data(SIMULATIONS["SIMULATION_CHALLENGE_INSERT"], params)
+            if ret == 0:
+                ret = self.update_data(SIMULATIONS["SIMULATION_ADD_CHALLENGER"], params)
+        else:
+            ret = 1
+            logging.warn("No user data: in <SimulationChallengeController>")
+        self.write(dict(ret=ret))

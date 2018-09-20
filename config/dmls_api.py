@@ -17,6 +17,17 @@ USER_INSERT = """
       VALUES(%(user_name)s, %(avatar)s, %(w_id)s)
 """
 
+FIND_USER = """
+    SELECT * FROM user_info
+      WHERE w_id = %(w_id)s
+"""
+
+LOGIN_TIME_UPDATE = """
+    UPDATE user_info
+      SET last_click_login_time = %(current_time)s
+      WHERE id = %(user_id)
+"""
+
 # a list, 模拟类型剧情的排行榜
 USER_RANK = """
     SELECT a.challenger_id AS user_id, a.highest_score AS highest_score, a.plot_id AS plot_id, b.plot_name AS plot_name, c.name AS user_name, c.avatar AS avatar 
@@ -43,6 +54,27 @@ SIMULATION_PLOT = """
       WHERE id = %(plot_id)s AND delete = 0
 """
 
+SIMULATION_TO_USER = """
+    SELECT a.id, a.plot_name, a.challengers_num, 
+        CASE WHEN b.challenger_id = %(user_id)s THEN 1 ELSE 0 END AS challenged
+    FROM
+        (SELECT * FROM simulation_plot WHERE type_id = %(type_id)s AND delete = 0) AS a
+    LEFT JOIN
+        (SELECT * FROM simulation_challenge WHERE challenger_id = %(user_id)s) AS b
+    ON a.id = b.plot_id
+"""
+
+SIMULATION_CHALLENGE_INSERT = """
+    INSERT INTO simulation_challenge(challenger_id, plot_id, score, highest_score)
+        VALUES(%(user_id)s, %(plot_id)s, %(score)s, %(score)s)
+"""
+
+SIMULATION_ADD_CHALLENGER = """
+    UPDATE simulation_plot
+        SET challengers_num = challengers_num + 1
+        WHERE plot_id = %(plot_id)s
+"""
+
 CHAPTER_PLOTS = """
     SELECT id, plot_name, position FROM chapter_plot
       WHERE delete = 0 AND type_id = %(type_id)s
@@ -54,20 +86,49 @@ CHAPTER_PLOT = """
       WHERE delete = 0 AND id = %(plot_id)s
 """
 
+CHAPTER_TO_USER = """
+    SELECT a.id, a.plot_name, a.challengers_num,
+        CASE WHEN b.challenger_id = %(user_id)s THEN 1 ELSE 0 END AS challenged
+    FROM
+        (SELECT * FROM chapter_plot WHERE type_id = %(type_id)s AND delete = 0) AS a
+    LEFT JOIN
+        (SELECT * FROM chapter_challenge WHERE challenger_id = %(user_id)s) AS b
+    ON a.id = b.plot_id
+"""
+
+CHAPTER_CHALLENGE_INSERT = """
+    INSERT INTO chapter_challenge(challenger_id, plot_id, score, highest_score)
+        VALUES(%(user_id)s, %(plot_id)s, %(score)s, %(score)s)
+"""
+
+CHAPTER_ADD_CHALLENGER = """
+    UPDATE chapter_plot
+        SET challengers_num = challengers_num + 1
+        WHERE plot_id = %(plot_id)s
+"""
+
 
 USERS = {
     "USER_RANK": USER_RANK,
     "USER_INFO": USER_INFO,
     "USER_INSERT": USER_INSERT,
     "COIN_UPDATE": COIN_UPDATE,
+    "FIND_USER": FIND_USER,  # return all fields
+    "LOGIN_TIME_UPDATE": LOGIN_TIME_UPDATE,
 }
 
 SIMULATIONS = {
     "SIMULATION_PLOTS": SIMULATION_PLOTS,
     "SIMULATION_PLOT": SIMULATION_PLOT,
+    "SIMULATION_TO_USER": SIMULATION_TO_USER,
+    "SIMULATION_CHALLENGE_INSERT": SIMULATION_CHALLENGE_INSERT,
+    "SIMULATION_ADD_CHALLENGER": SIMULATION_ADD_CHALLENGER,
 }
 
 CHAPTERS = {
     "CHAPTER_PLOTS": CHAPTER_PLOTS,
     "CHAPTER_PLOT": CHAPTER_PLOT,
+    "CHAPTER_TO_USER": CHAPTER_TO_USER,
+    "CHAPTER_CHALLENGE_INSERT": CHAPTER_CHALLENGE_INSERT,
+    "CHAPTER_ADD_CHALLENGER": CHAPTER_ADD_CHALLENGER,
 }
