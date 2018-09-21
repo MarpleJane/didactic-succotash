@@ -69,6 +69,19 @@ SIMULATION_CHALLENGE_INSERT = """
         VALUES(%(user_id)s, %(plot_id)s, %(score)s, %(score)s)
 """
 
+SIMULATION_CHALLENGE_UPDATE = """
+    UPDATE simulation_challenge
+        SET challenge_times += 1,
+            score = %(score)s,
+            update_time = %(update_time)s
+        WHERE challenger_id = %(user_id)s AND plot_id = %(plot_id)s
+"""
+
+SIMULATION_CHALLENGE_FIND = """
+    SELECT * FROM simulation_challenge
+        WHERE challenger_id = %(user_id)s AND plot_id = %(plot_id)s
+"""
+
 SIMULATION_ADD_CHALLENGER = """
     UPDATE simulation_plot
         SET challengers_num = challengers_num + 1
@@ -107,6 +120,19 @@ CHAPTER_ADD_CHALLENGER = """
         WHERE plot_id = %(plot_id)s
 """
 
+CHAPTER_CHALLENGE_UPDATE = """
+    UPDATE chapter_challenge
+        SET challenge_times += 1,
+            score = %(score)s,
+            update_time = %(update_time)s
+        WHERE challenger_id = %(user_id)s AND plot_id = %(plot_id)s
+"""
+
+CHAPTER_CHALLENGE_FIND = """
+    SELECT * FROM chapter_challenge
+        WHERE challenger_id = %(user_id)s AND plot_id = %(plot_id)s
+"""
+
 
 USERS = {
     "USER_RANK": USER_RANK,
@@ -123,6 +149,8 @@ SIMULATIONS = {
     "SIMULATION_TO_USER": SIMULATION_TO_USER,
     "SIMULATION_CHALLENGE_INSERT": SIMULATION_CHALLENGE_INSERT,
     "SIMULATION_ADD_CHALLENGER": SIMULATION_ADD_CHALLENGER,
+    "SIMULATION_CHALLENGE_UPDATE": SIMULATION_CHALLENGE_UPDATE,
+    "SIMULATION_CHALLENGE_FIND": SIMULATION_CHALLENGE_FIND,
 }
 
 CHAPTERS = {
@@ -131,4 +159,6 @@ CHAPTERS = {
     "CHAPTER_TO_USER": CHAPTER_TO_USER,
     "CHAPTER_CHALLENGE_INSERT": CHAPTER_CHALLENGE_INSERT,
     "CHAPTER_ADD_CHALLENGER": CHAPTER_ADD_CHALLENGER,
+    "CHAPTER_CHALLENGE_UPDATE": CHAPTER_CHALLENGE_UPDATE,
+    "CHAPTER_CHALLENGE_FIND": CHAPTER_CHALLENGE_FIND,
 }

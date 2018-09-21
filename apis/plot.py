@@ -64,7 +64,7 @@ class ChapterInfoController(BaseController):
 
 
 class ChapterChallengeController(BaseController):  # TODO: need test
-    """/v1/add/chapter_challenge"""
+    """/v1/add_update/chapter_challenge"""
     def post(self):
         w_id = self.get_argument("w_id")
         plot_id = self.get_argument("plot_id")
@@ -78,9 +78,22 @@ class ChapterChallengeController(BaseController):  # TODO: need test
                 "plot_id": plot_id,
                 "score": score
             }
-            ret = self.insert_data(CHAPTERS["CHAPTER_CHALLENGE_INSERT"], params)
-            if ret == 0:
-                ret = self.update_data(CHAPTERS["CHAPTER_ADD_CHALLENGER"], params)
+            challenge_data = self.find_data(CHAPTERS["CHAPTER_CHALLENGE_FIND"], params)
+            if challenge_data:
+                if score < chapter_data["score"]:
+                    score = chapter_data["score"]
+                chapter_params = {
+                    "user_id": user_data["id"],
+                    "plot_id": plot_id,
+                    "score": score,
+                    "update_time": self.current_time()
+                }
+                ret = self.update_data(CHAPTERS["CHAPTER_CHALLENGE_UPDATE"], chapter_params)
+                logging.warn("Update data: in <ChapterChallengeController>")
+            else:
+                ret = self.insert_data(CHAPTERS["CHAPTER_CHALLENGE_INSERT"], params)
+                if ret == 0:
+                    ret = self.update_data(CHAPTERS["CHAPTER_ADD_CHALLENGER"], params)
         else:
             ret = 1
             logging.warn("No user data: in <ChapterChallengeController>")
@@ -88,7 +101,7 @@ class ChapterChallengeController(BaseController):  # TODO: need test
 
 
 class SimulationChallengeController(BaseController):  # TODO: need test
-    """/v1/add/simulation_challenge"""
+    """/v1/add_update/simulation_challenge"""
     def post(self):
         w_id = self.get_argument("w_id")
         plot_id = self.get_argument("plot_id")
@@ -102,10 +115,24 @@ class SimulationChallengeController(BaseController):  # TODO: need test
                 "plot_id": plot_id,
                 "score": score
             }
-            ret = self.insert_data(SIMULATIONS["SIMULATION_CHALLENGE_INSERT"], params)
-            if ret == 0:
-                ret = self.update_data(SIMULATIONS["SIMULATION_ADD_CHALLENGER"], params)
+            challenge_data = self.find_data(SIMULATIONS["SIMULATION_CHALLENGE_FIND"], params)
+            if challenge_data:
+                if score < chapter_data["score"]:
+                    score = chapter_data["score"]
+                simulation_params = {
+                    "user_id": user_data["id"],
+                    "plot_id": plot_id,
+                    "score": score,
+                    "update_time": self.current_time()
+                }
+                ret = self.update_data(SIMULATIONS["SIMULATION_CHALLENGE_UPDATE"], simulation_params)
+                logging.warn("Update data: in <SimulationChallengeController>")
+            else:
+                ret = self.insert_data(SIMULATIONS["SIMULATION_CHALLENGE_INSERT"], params)
+                if ret == 0:
+                    ret = self.update_data(SIMULATIONS["SIMULATION_ADD_CHALLENGER"], params)
         else:
             ret = 1
             logging.warn("No user data: in <SimulationChallengeController>")
         self.write(dict(ret=ret))
+
