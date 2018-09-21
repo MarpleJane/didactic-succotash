@@ -55,7 +55,7 @@ SIMULATION_PLOT = """
 """
 
 SIMULATION_TO_USER = """
-    SELECT a.id, a.plot_name, a.challengers_num, 
+    SELECT a.id as user_id, a.plot_name, a.challengers_num, 
         CASE WHEN b.challenger_id = %(user_id)s THEN 1 ELSE 0 END AS challenged
     FROM
         (SELECT * FROM simulation_plot WHERE type_id = %(type_id)s AND delete = 0) AS a
@@ -87,7 +87,7 @@ CHAPTER_PLOT = """
 """
 
 CHAPTER_TO_USER = """
-    SELECT a.id, a.plot_name, a.challengers_num,
+    SELECT a.id as user_id, a.plot_name, a.challengers_num,
         CASE WHEN b.challenger_id = %(user_id)s THEN 1 ELSE 0 END AS challenged
     FROM
         (SELECT * FROM chapter_plot WHERE type_id = %(type_id)s AND delete = 0) AS a
