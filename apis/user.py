@@ -24,14 +24,31 @@ class UserSignupController(BaseController):
         w_id = self.get_argument("w_id")
         params = {"user_name": user_name, "avatar": avatar, "w_id": w_id}
         user_data = self.find_data(USERS["FIND_USER"], params)
-        ret = 1  # has exception
+        ret = 1  # has expection
         if user_data:
             ret = 2  # user exist, then FE should jump to "/v1/get_coins"
-            current_time = self.current_time_obj()
-            need_coins = (current_time - user_data["last_click_login"].rsplit(".")[0]).days >= 1
-            self.write(dict(ret=ret, user_data=user_data, need_coins=need_coins))
+            # current_time = self.current_time_obj()
+            # need_coins = (current_time - user_data["last_click_login_time"].rsplit(".")[0]).days >= 1
+            # self.write(dict(ret=ret, user_data=user_data, need_coins=need_coins))
         else:
             ret = self.insert_data(USERS["USER_INSERT"], params)
+            # self.write(dict(ret=ret))
+        self.write(dict(ret=ret))
+
+
+class UserSigninController(BaseController):
+    """/v1/user_signin"""
+    def post(self):
+        w_id = self.get_argument("w_id")
+        params = {"w_id": w_id}
+        user_data = self.find_data(USERS["FIND_USER"], params)
+        ret = 1
+        if user_data:
+            ret = 0
+            current_time = self.current_time_obj()
+            need_coins = (current_time - user_data["last_click_login_time"].rsplit(".")[0]).days >= 1
+            self.write(dict(ret=ret, user_data=user_data, need_coins=need_coins))
+        else:
             self.write(dict(ret=ret))
 
 

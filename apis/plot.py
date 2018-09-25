@@ -70,7 +70,7 @@ class ChapterChallengeController(BaseController):  # TODO: need test
         plot_id = self.get_argument("plot_id")
         score = self.get_argument("score")
         params_user = {"w_id": w_id}
-        user_data = self.find_data(USERS["FIND_USER"], params)
+        user_data = self.find_data(USERS["FIND_USER"], params_user)
         ret = 0
         if user_data:
             params = {
@@ -107,7 +107,7 @@ class SimulationChallengeController(BaseController):  # TODO: need test
         plot_id = self.get_argument("plot_id")
         score = self.get_argument("score")
         params_user = {"w_id": w_id}
-        user_data = self.find_data(USERS["FIND_USER"], params)
+        user_data = self.find_data(USERS["FIND_USER"], params_user)
         ret = 0
         if user_data:
             params = {

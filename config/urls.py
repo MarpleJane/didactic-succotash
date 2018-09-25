@@ -20,6 +20,7 @@ urls = [
 
     ("/v1/user_rank", UserRankController),
     ("/v1/user_signup", UserSignupController),
+    ("/v1/user_signin", UserSigninController),
     ("/v1/user_info/([0-9]+)", UserInfo),
     ("/v1/get_coins/([0-9]+)", GetCoinsController),
 
