@@ -46,7 +46,7 @@ class UserSigninController(BaseController):
         if user_data:
             ret = 0
             current_time = self.current_time_obj()
-            need_coins = (current_time - user_data["last_click_login_time"].rsplit(".")[0]).days >= 1
+            need_coins = (current_time - user_data["last_click_login_time"]).days >= 1
             self.write(dict(ret=ret, user_data=user_data, need_coins=need_coins))
         else:
             self.write(dict(ret=ret))

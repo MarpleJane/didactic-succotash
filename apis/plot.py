@@ -49,9 +49,11 @@ class ChapterPlotController(BaseController):
 class ChapterInfoController(BaseController):
     """/v1/chapter_info"""
     def post(self):
-        data = tornado.escape.json_decode(self.request.body)
-        w_id = data["w_id"]
-        type_id = data["type_id"]
+        # data = tornado.escape.json_decode(self.request.body)
+        # w_id = data["w_id"]
+        # type_id = data["type_id"]
+        w_id = self.get_argument("w_id")
+        type_id = self.get_argument("type_id")
         params_user = {"w_id": w_id}
         user_data = self.find_data(USERS["FIND_USER"], params)
         user_chapter = []
