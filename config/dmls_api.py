@@ -85,7 +85,7 @@ SIMULATION_CHALLENGE_FIND = """
 SIMULATION_ADD_CHALLENGER = """
     UPDATE simulation_plot
         SET challengers_num = challengers_num + 1
-        WHERE plot_id = %(plot_id)s
+        WHERE id = %(plot_id)s
 """
 
 CHAPTER_PLOTS = """
@@ -117,7 +117,7 @@ CHAPTER_CHALLENGE_INSERT = """
 CHAPTER_ADD_CHALLENGER = """
     UPDATE chapter_plot
         SET challengers_num = challengers_num + 1
-        WHERE plot_id = %(plot_id)s
+        WHERE id = %(plot_id)s
 """
 
 CHAPTER_CHALLENGE_UPDATE = """

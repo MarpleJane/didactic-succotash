@@ -82,6 +82,8 @@ class ChapterChallengeController(BaseController):  # TODO: need test
             }
             challenge_data = self.find_data(CHAPTERS["CHAPTER_CHALLENGE_FIND"], params)
             if challenge_data:
+                logging.warn("Update data: in <ChapterChallengeController>")
+                logging.warn("[plot id]: %d", int(params["plot_id"]))
                 if score < chapter_data["score"]:
                     score = chapter_data["score"]
                 chapter_params = {
@@ -91,8 +93,9 @@ class ChapterChallengeController(BaseController):  # TODO: need test
                     "update_time": self.current_time()
                 }
                 ret = self.update_data(CHAPTERS["CHAPTER_CHALLENGE_UPDATE"], chapter_params)
-                logging.warn("Update data: in <ChapterChallengeController>")
             else:
+                logging.warn("Insert data: in <ChapterChallengeController>")
+                logging.warn("[plot id]: %d", int(params["plot_id"]))
                 ret = self.insert_data(CHAPTERS["CHAPTER_CHALLENGE_INSERT"], params)
                 if ret == 0:
                     ret = self.update_data(CHAPTERS["CHAPTER_ADD_CHALLENGER"], params)
