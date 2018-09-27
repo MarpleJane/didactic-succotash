@@ -84,8 +84,8 @@ class ChapterChallengeController(BaseController):  # TODO: need test
             if challenge_data:
                 logging.warn("Update data: in <ChapterChallengeController>")
                 logging.warn("[plot id]: %d", int(params["plot_id"]))
-                if score < chapter_data["score"]:
-                    score = chapter_data["score"]
+                if score < challenge_data["score"]:
+                    score = challenge_data["score"]
                 chapter_params = {
                     "user_id": user_data["id"],
                     "plot_id": plot_id,
