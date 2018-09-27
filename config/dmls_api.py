@@ -71,7 +71,7 @@ SIMULATION_CHALLENGE_INSERT = """
 
 SIMULATION_CHALLENGE_UPDATE = """
     UPDATE simulation_challenge
-        SET challenge_times += 1,
+        SET challenge_times = challenge_times + 1,
             score = %(score)s,
             update_time = %(update_time)s
         WHERE challenger_id = %(user_id)s AND plot_id = %(plot_id)s
@@ -122,7 +122,7 @@ CHAPTER_ADD_CHALLENGER = """
 
 CHAPTER_CHALLENGE_UPDATE = """
     UPDATE chapter_challenge
-        SET challenge_times += 1,
+        SET challenge_times = challenge_times + 1,
             score = %(score)s,
             update_time = %(update_time)s
         WHERE challenger_id = %(user_id)s AND plot_id = %(plot_id)s

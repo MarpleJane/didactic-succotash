@@ -109,6 +109,7 @@ class SimulationChallengeController(BaseController):  # TODO: need test
         w_id = self.get_argument("w_id")
         plot_id = self.get_argument("plot_id")
         score = self.get_argument("score")
+        score = int(score)
         params_user = {"w_id": w_id}
         user_data = self.find_data(USERS["FIND_USER"], params_user)
         ret = 0
