@@ -83,7 +83,6 @@ class ChapterChallengeController(BaseController):  # TODO: need test
             challenge_data = self.find_data(CHAPTERS["CHAPTER_CHALLENGE_FIND"], params)
             if challenge_data:
                 logging.warn("Update data: in <ChapterChallengeController>")
-                logging.warn("[plot id]: %d", int(params["plot_id"]))
                 if score < challenge_data["score"]:
                     score = challenge_data["score"]
                 chapter_params = {
@@ -95,7 +94,6 @@ class ChapterChallengeController(BaseController):  # TODO: need test
                 ret = self.update_data(CHAPTERS["CHAPTER_CHALLENGE_UPDATE"], chapter_params)
             else:
                 logging.warn("Insert data: in <ChapterChallengeController>")
-                logging.warn("[plot id]: %d", int(params["plot_id"]))
                 ret = self.insert_data(CHAPTERS["CHAPTER_CHALLENGE_INSERT"], params)
                 if ret == 0:
                     ret = self.update_data(CHAPTERS["CHAPTER_ADD_CHALLENGER"], params)
@@ -118,12 +116,13 @@ class SimulationChallengeController(BaseController):  # TODO: need test
             params = {
                 "user_id": user_data["id"],
                 "plot_id": plot_id,
-                "score": score
+                "score": int(score)
             }
             challenge_data = self.find_data(SIMULATIONS["SIMULATION_CHALLENGE_FIND"], params)
             if challenge_data:
-                if score < chapter_data["score"]:
-                    score = chapter_data["score"]
+                logging.warn("Update data: in <SimulationChallengeController>")
+                if score < challenge_data["score"]:
+                    score = challenge_data["score"]
                 simulation_params = {
                     "user_id": user_data["id"],
                     "plot_id": plot_id,
@@ -131,8 +130,8 @@ class SimulationChallengeController(BaseController):  # TODO: need test
                     "update_time": self.current_time()
                 }
                 ret = self.update_data(SIMULATIONS["SIMULATION_CHALLENGE_UPDATE"], simulation_params)
-                logging.warn("Update data: in <SimulationChallengeController>")
             else:
+                logging.warn("Insert data: in <SimulationChallengeController>")
                 ret = self.insert_data(SIMULATIONS["SIMULATION_CHALLENGE_INSERT"], params)
                 if ret == 0:
                     ret = self.update_data(SIMULATIONS["SIMULATION_ADD_CHALLENGER"], params)
