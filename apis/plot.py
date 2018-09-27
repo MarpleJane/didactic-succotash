@@ -55,7 +55,7 @@ class ChapterInfoController(BaseController):
         w_id = self.get_argument("w_id")
         type_id = self.get_argument("type_id")
         params_user = {"w_id": w_id}
-        user_data = self.find_data(USERS["FIND_USER"], params)
+        user_data = self.find_data(USERS["FIND_USER"], params_user)
         user_chapter = []
         if user_data:
             params = {"user_id": user_data["id"], "type_id": type_id}
