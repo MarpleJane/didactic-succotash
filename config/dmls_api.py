@@ -22,10 +22,10 @@ FIND_USER = """
       WHERE w_id = %(w_id)s
 """
 
-LOGIN_TIME_UPDATE = """
+LOGIN_COIN_TIME_UPDATE = """
     UPDATE user_info
-      SET last_click_login_time = %(current_time)s
-      WHERE id = %(user_id)
+      SET get_login_coin_time = %(current_time)s
+      WHERE id = %(user_id)s
 """
 
 # a list, 模拟类型剧情的排行榜
@@ -140,7 +140,7 @@ USERS = {
     "USER_INSERT": USER_INSERT,
     "COIN_UPDATE": COIN_UPDATE,
     "FIND_USER": FIND_USER,  # return all fields
-    "LOGIN_TIME_UPDATE": LOGIN_TIME_UPDATE,
+    "LOGIN_COIN_TIME_UPDATE": LOGIN_COIN_TIME_UPDATE,
 }
 
 SIMULATIONS = {

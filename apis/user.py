@@ -46,9 +46,9 @@ class UserSigninController(BaseController):
         if user_data:
             ret = 0
             current_time = self.current_time_obj()
-            need_coins = (current_time - user_data["last_click_login_time"]).days >= 1
+            need_coins = (current_time - user_data["get_login_coin_time"]).days >= 1
             del user_data["create_time"]
-            del user_data["last_click_login_time"]
+            del user_data["get_login_coin_time"]
             self.write(dict(ret=ret, user_data=user_data, need_coins=need_coins))
         else:
             self.write(dict(ret=ret))
@@ -69,6 +69,7 @@ class GetCoinsController(BaseController):
     def post(self, user_id):
         w_id = self.get_argument("w_id")
         coins = self.get_argument("coins")
+        login = self.get_argument("login")  # bool
         user_id = int(user_id)
         params = {"w_id": w_id}
         user_data = self.find_data(USERS["FIND_USER"], params)
@@ -80,4 +81,10 @@ class GetCoinsController(BaseController):
                 "coins": coins
             }
             ret = self.update_data(USERS["COIN_UPDATE"], coin_params)
+            if login:
+                login_params = {
+                    "user_id": user_data["id"],
+                    "current_time": self.current_time()
+                }
+                ret = self.update_data(USERS["LOGIN_COIN_TIME_UPDATE"], login_params)
         self.write(dict(ret=ret))
