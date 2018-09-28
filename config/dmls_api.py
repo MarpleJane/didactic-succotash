@@ -39,7 +39,7 @@ USER_RANK = """
 
 COIN_UPDATE = """
     UPDATE user_info
-      SET get_coins = %(coins)s
+      SET get_coins = get_coins + %(coins)s
       WHERE id = %(user_id)s
 """
 

@@ -67,8 +67,17 @@ class UserInfo(BaseController):
 class GetCoinsController(BaseController):
     """/v1/get_coins/([0-9]+)"""
     def post(self, user_id):
+        w_id = self.get_argument("w_id")
         coins = self.get_argument("coins")
         user_id = int(user_id)
-        params = {"user_id", "coins"}
-        ret = self.update_data(USERS["COIN_UPDATE"], params)
+        params = {"w_id": w_id}
+        user_data = self.find_data(USERS["FIND_USER"], params)
+        ret = 1
+        if user_data:
+            ret = 0
+            coin_params = {
+                "user_id": user_data["id"],
+                "coins": coins
+            }
+            ret = self.update_data(USERS["COIN_UPDATE"], coin_params)
         self.write(dict(ret=ret))
