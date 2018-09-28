@@ -66,7 +66,7 @@ class UserInfo(BaseController):
 
 class GetCoinsController(BaseController):
     """/v1/get_coins"""
-    def post(self, user_id):
+    def post(self):
         w_id = self.get_argument("w_id")
         coins = self.get_argument("coins")
         login = self.get_argument("login")  # bool
