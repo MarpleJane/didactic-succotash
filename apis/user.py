@@ -70,7 +70,6 @@ class GetCoinsController(BaseController):
         w_id = self.get_argument("w_id")
         coins = self.get_argument("coins")
         login = self.get_argument("login")  # bool
-        user_id = int(user_id)
         params = {"w_id": w_id}
         user_data = self.find_data(USERS["FIND_USER"], params)
         ret = 1
