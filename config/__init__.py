@@ -38,7 +38,7 @@ class BaseController(RequestHandler):
     def select_all(self, statement, params):
         conn = self.get_conn()
         cursor = self.get_cursor(conn)
-        total = 0
+        total = [{}]
         try:
             cursor.execute(statement, params)
             total = cursor.fetchall()
@@ -47,11 +47,9 @@ class BaseController(RequestHandler):
             conn.rollback()
         finally:
             self.put_conn(conn)
+
+        return total
         
-        if total:
-            return total
-        else:
-            return [{}]
 
     def find_data(self, statement, params):
         conn = self.get_conn()
@@ -84,19 +82,6 @@ class BaseController(RequestHandler):
 
     def update_data(self, statement, params):
         return self.insert_data(statement, params)
-        # conn = self.get_conn()
-        # cursor = self.get_cursor(conn)
-        # ret = 0
-        # try:
-        #     cursor.execute(statement, params)
-        #     conn.commit()
-        # except Exception as e:
-        #     logging.warn(e)
-        #     conn.rollback()
-        #     ret = 1
-        # finally:
-        #     self.put_conn(conn)
-        # return ret
 
     def delete_data(self, statement, params):
         return self.insert_data(statement, params)

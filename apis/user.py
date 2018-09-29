@@ -27,9 +27,6 @@ class UserSignupController(BaseController):
         ret = 1  # has expection
         if user_data:
             ret = 2  # user exist, then FE should jump to "/v1/get_coins"
-            # current_time = self.current_time_obj()
-            # need_coins = (current_time - user_data["last_click_login_time"].rsplit(".")[0]).days >= 1
-            # self.write(dict(ret=ret, user_data=user_data, need_coins=need_coins))
         else:
             ret = self.insert_data(USERS["USER_INSERT"], params)
             # self.write(dict(ret=ret))
@@ -45,8 +42,18 @@ class UserSigninController(BaseController):
         ret = 1
         if user_data:
             ret = 0
-            current_time = self.current_time_obj()
-            need_coins = (current_time - user_data["get_login_coin_time"]).days >= 1
+            current_time = datetime.datetime.combine(
+                self.current_time_obj(),
+                datetime.time.min
+            )
+            get_coin_time = datetime.datetime.combine(
+                user_data["get_login_coin_time"],
+                datetime.time.min
+            )
+            need_coins = (current_time - get_coin_time).days >= 1
+            logging.warn(current_time)
+            logging.warn(user_data["get_login_coin_time"])
+            logging.warn((current_time - get_coin_time).days)
             del user_data["create_time"]
             del user_data["get_login_coin_time"]
             self.write(dict(ret=ret, user_data=user_data, need_coins=need_coins))

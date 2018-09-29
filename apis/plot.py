@@ -49,9 +49,6 @@ class ChapterPlotController(BaseController):
 class ChapterInfoController(BaseController):
     """/v1/chapter_info"""
     def post(self):
-        # data = tornado.escape.json_decode(self.request.body)
-        # w_id = data["w_id"]
-        # type_id = data["type_id"]
         w_id = self.get_argument("w_id")
         type_id = self.get_argument("type_id")
         params_user = {"w_id": w_id}
@@ -65,7 +62,7 @@ class ChapterInfoController(BaseController):
                                                      # then user not exist or error occurred
 
 
-class ChapterChallengeController(BaseController):  # TODO: need test
+class ChapterChallengeController(BaseController):
     """/v1/add_update/chapter_challenge"""
     def post(self):
         w_id = self.get_argument("w_id")
@@ -103,7 +100,7 @@ class ChapterChallengeController(BaseController):  # TODO: need test
         self.write(dict(ret=ret))
 
 
-class SimulationChallengeController(BaseController):  # TODO: need test
+class SimulationChallengeController(BaseController):
     """/v1/add_update/simulation_challenge"""
     def post(self):
         w_id = self.get_argument("w_id")
