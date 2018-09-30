@@ -44,6 +44,7 @@ USER_RANK = """
           GROUP BY challenger_id) as b
       JOIN user_info AS a on a.id = b.challenger_id
       ORDER BY total_score DESC
+      LIMIT %(limit)s
 """
 
 COIN_UPDATE = """
