@@ -38,7 +38,7 @@ LOGIN_COIN_TIME_UPDATE = """
 # """
 
 USER_RANK = """
-    SELECT b.challenger_id AS user_id, b.total_score AS total_score, a.name AS user_name, a.avatar AS avatar, a.get_coins AS get_coins, a.w_id AS w_id
+    SELECT b.challenger_id AS user_id, b.total_score AS total_score, a.name AS user_name, a.avatar AS avatar, a.w_id AS w_id
       FROM
         (SELECT challenger_id, SUM(highest_score) AS total_score FROM simulation_challenge
           GROUP BY challenger_id) as b
