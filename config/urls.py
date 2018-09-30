@@ -29,6 +29,7 @@ urls = [
     ("/v1/simulation_plot/([0-9]+)", SimulationPlotController),
     ("/v1/chapter_plot/([0-9]+)", ChapterPlotController),
     ("/v1/chapter_info", ChapterInfoController),
+    ("/v1/simulation_info", SimulationInfoController),
     ("/v1/add_update/chapter_challenge", ChapterChallengeController),
     ("/v1/add_update/simulation_challenge", SimulationChallengeController),
 ]

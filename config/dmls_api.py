@@ -6,8 +6,7 @@ USER_INFO = """
     SELECT b.challenger_id AS user_id, b.total_score AS total_score, a.name AS user_name, a.avatar AS avatar, a.get_coins AS get_coins, a.w_id AS w_id
       FROM
         (SELECT challenger_id, SUM(highest_score) AS total_score FROM simulation_challenge
-          GROUP BY challenger_id
-          ORDER BY total_score DESC) as b
+          GROUP BY challenger_id) as b
       JOIN user_info AS a on a.id = b.challenger_id
       WHERE b.challenger_id = %(challenger_id)s
 """
@@ -29,12 +28,22 @@ LOGIN_COIN_TIME_UPDATE = """
 """
 
 # a list, 模拟类型剧情的排行榜
+# USER_RANK = """
+#     SELECT a.challenger_id AS user_id, a.highest_score AS highest_score, a.plot_id AS plot_id, b.plot_name AS plot_name, c.name AS user_name, c.avatar AS avatar 
+#       FROM simulation_challenge AS a
+#       JOIN user_info AS c ON a.challenger_id = c.id
+#       JOIN simulation_plot AS b ON a.plot_id = b.id
+#       ORDER BY a.highest_score DESC
+#       LIMIT %(limit)s 
+# """
+
 USER_RANK = """
-    SELECT a.challenger_id AS user_id, a.highest_score AS highest_score, a.plot_id AS plot_id, b.plot_name AS plot_name, c.name AS user_name, c.avatar AS avatar 
-      FROM simulation_challenge AS a
-      JOIN user_info AS c ON a.challenger_id = c.id
-      JOIN simulation_plot AS b ON a.plot_id = b.id
-      LIMIT %(limit)s 
+    SELECT b.challenger_id AS user_id, b.total_score AS total_score, a.name AS user_name, a.avatar AS avatar, a.get_coins AS get_coins, a.w_id AS w_id
+      FROM
+        (SELECT challenger_id, SUM(highest_score) AS total_score FROM simulation_challenge
+          GROUP BY challenger_id) as b
+      JOIN user_info AS a on a.id = b.challenger_id
+      ORDER BY total_score DESC
 """
 
 COIN_UPDATE = """

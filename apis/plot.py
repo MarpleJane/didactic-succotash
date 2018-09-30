@@ -62,6 +62,22 @@ class ChapterInfoController(BaseController):
                                                      # then user not exist or error occurred
 
 
+class SimulationInfoController(BaseController):
+    """/v1/simulation_info"""
+    def post(self):
+        w_id = self.get_argument("w_id")
+        type_id = self.get_argument("type_id")
+        params_user = {"w_id": w_id}
+        user_data = self.find_data(USERS["FIND_USER"], params_user)
+        user_chapter = []
+        if user_data:
+            params = {"user_id": user_data["id"], "type_id": type_id}
+            user_chapter = self.select_all(SIMULATIONS["SIMULATION_TO_USER"], params)
+            
+        self.write(dict(user_chapter=user_chapter))  # if user_chapter=[] 
+                                                     # then user not exist or error occurred
+
+
 class ChapterChallengeController(BaseController):
     """/v1/add_update/chapter_challenge"""
     def post(self):
