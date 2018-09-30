@@ -23,6 +23,7 @@ urls = [
     ("/v1/user_signin", UserSigninController),
     ("/v1/user_info/([0-9]+)", UserInfo),
     ("/v1/get_coins", GetCoinsController),
+    ("/v1/target_user_rank", TargetUserRankController),
 
     ("/v1/simulation_plots/([0-9]+)", SimulationPlotsController),
     ("/v1/chapter_plots/([0-9]+)", ChapterPlotsController),

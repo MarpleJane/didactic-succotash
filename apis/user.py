@@ -16,6 +16,19 @@ class UserRankController(BaseController):
         self.write(dict(rank_list=rank_list))
 
 
+class TargetUserRankController(BaseController):
+    """/v1/target_user_rank"""
+    def get(self):
+        w_id = self.get_argument("w_id")
+        rank_list = self.select_all(USERS["ALL_RANK"], {})
+        l = len(rank_list)
+        for user_pos in range(l):
+            if rank_list[user_pos]["w_id"] == w_id:
+                break
+        user_pos += 1
+        self.write(dict(user_pos=user_pos))
+
+
 class UserSignupController(BaseController):
     """/v1/user_signup"""
     def post(self):

@@ -47,6 +47,15 @@ USER_RANK = """
       LIMIT %(limit)s
 """
 
+ALL_RANK = """
+    SELECT b.challenger_id AS user_id, b.total_score AS total_score, a.name AS user_name, a.avatar AS avatar, a.w_id AS w_id
+      FROM
+        (SELECT challenger_id, SUM(highest_score) AS total_score FROM simulation_challenge
+          GROUP BY challenger_id) as b
+      JOIN user_info AS a on a.id = b.challenger_id
+      ORDER BY total_score DESC
+"""
+
 COIN_UPDATE = """
     UPDATE user_info
       SET get_coins = get_coins + %(coins)s
@@ -151,6 +160,7 @@ USERS = {
     "COIN_UPDATE": COIN_UPDATE,
     "FIND_USER": FIND_USER,  # return all fields
     "LOGIN_COIN_TIME_UPDATE": LOGIN_COIN_TIME_UPDATE,
+    "ALL_RANK": ALL_RANK,
 }
 
 SIMULATIONS = {
