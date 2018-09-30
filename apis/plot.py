@@ -72,9 +72,9 @@ class SimulationInfoController(BaseController):
         user_chapter = []
         if user_data:
             params = {"user_id": user_data["id"], "type_id": type_id}
-            user_chapter = self.select_all(SIMULATIONS["SIMULATION_TO_USER"], params)
+            user_simu = self.select_all(SIMULATIONS["SIMULATION_TO_USER"], params)
             
-        self.write(dict(user_chapter=user_chapter))  # if user_chapter=[] 
+        self.write(dict(user_simu=user_simu))  # if user_chapter=[] 
                                                      # then user not exist or error occurred
 
 
